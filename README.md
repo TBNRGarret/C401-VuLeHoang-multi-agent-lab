@@ -125,7 +125,8 @@ Mặc định lệnh sẽ báo các `TODO` cần làm. Đây là chủ đích c�
 Tìm trong code các marker:
 
 ```bash
-grep -R "TODO(student)" -n src tests docs
+grep -R "TODO(student)" -n src tests docs # this cmd can only be used in linux/macos stupid lecturer doesn't consider it's Windows
+Get-ChildItem -Path src, tests, docs -Recurse | Select-String -Pattern "TODO\\(student\\)"
 ```
 
 Các phần học viên cần tự làm:
