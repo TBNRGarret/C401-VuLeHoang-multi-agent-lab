@@ -9,10 +9,16 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+import os
+from pathlib import Path
+
+# Resolve the .env file path relative to this file (4 levels up)
+_env_path = Path(__file__).parent.parent.parent.parent / ".env"
+
 class Settings(BaseSettings):
     """Runtime settings loaded from environment variables or `.env`."""
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=str(_env_path), env_file_encoding="utf-8", extra="ignore")
 
     app_env: str = Field(default="local", validation_alias="APP_ENV")
     log_level: str = Field(default="INFO", validation_alias="LOG_LEVEL")
@@ -25,7 +31,7 @@ class Settings(BaseSettings):
 
     tavily_api_key: str | None = Field(default=None, validation_alias="TAVILY_API_KEY")
 
-    max_iterations: int = Field(default=6, ge=1, le=20, validation_alias="MAX_ITERATIONS")
+    max_iterations: int = Field(default=15, ge=1, le=50, validation_alias="MAX_ITERATIONS")
     timeout_seconds: int = Field(default=60, ge=5, le=600, validation_alias="TIMEOUT_SECONDS")
 
 
